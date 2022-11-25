@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="col-lg-12">
+    <h3 class="bd-title" id="content">Unique Value validation in FormArray</h3>
+    <br />
+    <div>
+      <form [formGroup]="jobFormGroup">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" formControlName="fullName" class="form-control" />
+        </div>
+        <h2>Skills</h2>
+        <button class="btn btn-primary" (click)="addSkill()">Add Skill</button>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Skill Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              [formGroup]="skillGroup"
+              *ngFor="
+                let skillGroup of jobFormGroup.get('skills')['controls'];
+                let i = index
+              "
+            >
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                <input
+                  type="text"
+                  formControlName="skillName"
+                  class="form-control"
+                />
+                {{
+                  jobFormGroup.get('skills')['controls'][i]['controls']
+                    .skillName.errors | json
+                }}
+              </td>
+              <td>
+                <input
+                  type="text"
+                  formControlName="jobprofile"
+                  class="form-control"
+                />
+                {{
+                  jobFormGroup.get('skills')['controls'][i]['controls']
+                    .jobprofile.errors | json
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button [disabled]="!jobFormGroup.valid" class="btn btn-primary">
+          Submit
+        </button>
+        {{
+          jobFormGroup.get('skills').errors | json
+        }}
+      </form>
+    </div>
+  </div>
+</div>
